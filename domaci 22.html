@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Domaci String</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            input, 
+            textarea{
+                width: 200px;
+                border:1px solid #000;
+                height: 30px;
+            }
+            textarea{
+                height: 200px;
+            }
+            button{
+                padding: 10px 20px;
+                border:1px solid #fff;
+            }
+
+            form p{
+                color:red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container clearfix">
+            <form>
+                <label>News title</label><br>
+                <input type="text" name="news-title" value="" id="news-title">
+                <p id="error-title"></p>
+
+                <label>News text</label><br>
+                <textarea name="news-text" rows="8" cols="80" id="news-text"></textarea>
+                <p id="error-text"></p>
+
+                <label>News link</label><br>
+                <input type="text" name="news-link" value="" id="news-link">
+                <p id="error-link"></p>
+
+
+
+                <label>Author</label><br>
+                <input type="text" name="news-author" value="" id="news-author">
+                <p id="error-author"></p>
+
+                <label>Author Email</label><br>
+                <input type="text" name="email" value="" id="email">
+                <p id="error-email"></p>
+
+                <button onclick="provera()" id="enter" type='button'>Display</button>
+
+            </form>
+
+            <div id="content">
+
+            </div>
+        </div>
+
+
+
+        <script>
+
+
+
+            function provera() {
+
+                var title = document.getElementById('news-title').value.trim();
+                var text = document.getElementById('news-text').value.trim();
+                var link = document.getElementById('news-link').value.trim();
+                var author = document.getElementById('news-author').value.trim();
+                var authorEmail = document.getElementById('email').value.trim();
+                var error = '';
+
+
+                var titleMessage = '';
+                if (title.length === 0) {
+                    titleMessage += 'A news title is required\n';
+                    error++;
+                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid red');
+                    //return;
+                }
+                ;
+
+                if (title.length < 3 || title.length > 50) {
+                    titleMessage += 'The news title must contain between 3 and 50 characters';
+                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                    //return;
+                }
+                ;
+
+                document.getElementById('error-title').innerText = titleMessage;
+
+
+
+                var textMessage = '';
+                if (text.length === 0) {
+                    textMessage += 'A news text is required\n';
+                    document.getElementById('news-text').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                    //return;
+                }
+                ;
+
+                if (text.length < 10 || text.length > 250) {
+                    textMessage += 'The news text must contain between 10 and 250 characters';
+                    document.getElementById('news-text').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                    //return;
+                }
+                ;
+
+                document.getElementById('error-text').innerText = textMessage;
+
+
+
+                var linkMessage = '';
+                if (link.length === 0) {
+                    linkMessage += 'A news link is required\n';
+                    document.getElementById('news-link').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                    //return;
+                }
+                ;
+
+                if (link.startsWith('http://')) {
+                    linkMessage = '';
+                } else {
+                    linkMessage += 'A valid link starts with http://\n';
+                    document.getElementById('news-link').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                }
+                ;
+
+                if (link.length < 10) {
+                    linkMessage += 'The news link must contain at least 10 characters';
+                    document.getElementById('news-link').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                    //return;
+                }
+                ;
+
+                document.getElementById('error-link').innerText = linkMessage;
+
+
+                var authorMessage = '';
+                if (author.length === 0) {
+                    authorMessage += '';
+                    //return;
+                }
+                ;
+
+                if (author.length > 0) {
+
+                    if (author.length < 3 || author.length > 20) {
+                        authorMessage = 'Author name must contain between 3 and 20 letters';
+                        document.getElementById('news-author').setAttribute('style', 'border: 1px solid red');
+                        error++;
+                        //return;
+                    }
+                }
+                ;
+                document.getElementById('error-author').innerText = authorMessage;
+
+
+
+                emailMessage = '';
+                if (authorEmail.length === 0) {
+                    emailMessage = 'Author email is required\n';
+                    document.getElementById('email').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                }
+                ;
+
+                if (authorEmail.length < 5) {
+                    emailMessage += 'The author email must contain at least 5 characters\n';
+                    document.getElementById('email').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                }
+                ;
+
+                if (authorEmail.indexOf('@', 2) == -1) {
+                    emailMessage += 'Enter a valid email adress';
+                    document.getElementById('email').setAttribute('style', 'border: 1px solid red');
+                    error++;
+                }
+                ;
+
+                document.getElementById('error-email').innerText = emailMessage;
+
+
+                var oldHtml = document.getElementById('content').innerHTML;
+                var newHtml = '<h1>' + title + '</h1>' + '<p>' + text + '<p>' + '<a href="' + link + '">' + link + '</a>' + '<p>' + authorEmail + '<p>' + '<h4>' + author + '</h4>' + '<hr>' + oldHtml;
+
+
+                if (error == 0) {
+                    document.getElementById('content').innerHTML = newHtml;
+                    document.getElementById('news-title').value = '';
+                    document.getElementById('news-text').value = '';
+                    document.getElementById('news-link').value = '';
+                    document.getElementById('news-author').value = '';
+                    document.getElementById('email').value = '';
+                }
+                ;
+
+
+
+
+            }/*function end*/
+
+
+            
+
+
+
+
+
+
+
+
+        </script>
+    </body>
+</html>
