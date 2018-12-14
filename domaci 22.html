@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Domaci String</title>
+        <title>Article writer</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -67,10 +67,25 @@ and open the template in the editor.
 
 
         <script>
-
+            
+            
+            
+            //MAKE A FUNCTION BORDER AND MESSAGE - MAKE A FUNCTION FOR GET VALUE AND CALL IT ON TOP OF THE INPUT SECTION
 
 
             function provera() {
+                
+                /**function rezultat(errorId , inputId , message) {
+                
+                if (message === 0) {
+                    document.getElementById(inputId).setAttribute('style', 'border: 1px solid black');
+                    document.getElementById(errorId).innerText = '';
+                    
+                } else {
+                    document.getElementById(inputId).setAttribute('style', 'border: 1px solid red');
+                    document.getElementById(errorId).innerText = message;
+                }
+            }*/
 
                 var title = document.getElementById('news-title').value.trim();
                 var text = document.getElementById('news-text').value.trim();
@@ -84,27 +99,35 @@ and open the template in the editor.
                 if (title.length === 0) {
                     titleMessage += 'A news title is required\n';
                     error++;
-                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid red');
                     //return;
                 }
                 ;
 
                 if (title.length < 3 || title.length > 50) {
                     titleMessage += 'The news title must contain between 3 and 50 characters';
-                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid red');
                     error++;
                     //return;
                 }
                 ;
 
-                document.getElementById('error-title').innerText = titleMessage;
+
+                /*rezultat('error-title' , 'news-title' , titleMessage);*/
+
+                if (error > 0) {
+                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid red');
+                    document.getElementById('error-title').innerText = titleMessage;
+                } else {
+                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid black');
+                    document.getElementById('error-title').innerText = '';
+                }
+
+
 
 
 
                 var textMessage = '';
                 if (text.length === 0) {
                     textMessage += 'A news text is required\n';
-                    document.getElementById('news-text').setAttribute('style', 'border: 1px solid red');
                     error++;
                     //return;
                 }
@@ -112,13 +135,12 @@ and open the template in the editor.
 
                 if (text.length < 10 || text.length > 250) {
                     textMessage += 'The news text must contain between 10 and 250 characters';
-                    document.getElementById('news-text').setAttribute('style', 'border: 1px solid red');
                     error++;
                     //return;
                 }
                 ;
 
-                document.getElementById('error-text').innerText = textMessage;
+                /*rezultat('error-text' , 'news-text' , textMessage);*/
 
 
 
@@ -217,7 +239,7 @@ and open the template in the editor.
             }/*function end*/
 
 
-            
+
 
 
 
