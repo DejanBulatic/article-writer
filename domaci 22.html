@@ -67,182 +67,160 @@ and open the template in the editor.
 
 
         <script>
-            
-            
-            
-            //MAKE A FUNCTION BORDER AND MESSAGE - MAKE A FUNCTION FOR GET VALUE AND CALL IT ON TOP OF THE INPUT SECTION
 
 
+
+
+
+            //Function provera start
             function provera() {
-                
-                /**function rezultat(errorId , inputId , message) {
-                
-                if (message === 0) {
-                    document.getElementById(inputId).setAttribute('style', 'border: 1px solid black');
-                    document.getElementById(errorId).innerText = '';
-                    
-                } else {
-                    document.getElementById(inputId).setAttribute('style', 'border: 1px solid red');
-                    document.getElementById(errorId).innerText = message;
-                }
-            }*/
 
-                var title = document.getElementById('news-title').value.trim();
-                var text = document.getElementById('news-text').value.trim();
-                var link = document.getElementById('news-link').value.trim();
-                var author = document.getElementById('news-author').value.trim();
-                var authorEmail = document.getElementById('email').value.trim();
                 var error = '';
 
 
+                //News title
                 var titleMessage = '';
-                if (title.length === 0) {
-                    titleMessage += 'A news title is required\n';
+                var title = getValue('news-title');
+
+                if (title == 0) {
                     error++;
-                    //return;
+                    titleMessage += 'Required field\n';
+
                 }
                 ;
 
-                if (title.length < 3 || title.length > 50) {
-                    titleMessage += 'The news title must contain between 3 and 50 characters';
+                if (title.length < 3 || title.length > 20) {
                     error++;
-                    //return;
-                }
-                ;
-
-
-                /*rezultat('error-title' , 'news-title' , titleMessage);*/
-
-                if (error > 0) {
-                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid red');
-                    document.getElementById('error-title').innerText = titleMessage;
-                } else {
-                    document.getElementById('news-title').setAttribute('style', 'border: 1px solid black');
-                    document.getElementById('error-title').innerText = '';
+                    titleMessage += 'Title must be between 3 and 20 charackters';
                 }
 
+                checkElement(titleMessage, 'news-title', 'error-title')
 
 
-
-
+                //News text
+                var text = getValue('news-text');
                 var textMessage = '';
-                if (text.length === 0) {
-                    textMessage += 'A news text is required\n';
+
+
+                if (text.length == 0) {
                     error++;
-                    //return;
-                }
-                ;
+                    textMessage += 'Required field\n';
 
-                if (text.length < 10 || text.length > 250) {
-                    textMessage += 'The news text must contain between 10 and 250 characters';
+                }
+
+
+                if (text.length < 5 || text.length > 250) {
                     error++;
-                    //return;
+                    textMessage += 'Text must be between 5 and 250 charackters';
                 }
-                ;
-
-                /*rezultat('error-text' , 'news-text' , textMessage);*/
 
 
 
+                checkElement(textMessage, 'news-text', 'error-text');
+
+
+                //News link
+                var link = getValue('news-link');
                 var linkMessage = '';
-                if (link.length === 0) {
-                    linkMessage += 'A news link is required\n';
-                    document.getElementById('news-link').setAttribute('style', 'border: 1px solid red');
-                    error++;
-                    //return;
-                }
-                ;
 
-                if (link.startsWith('http://')) {
-                    linkMessage = '';
-                } else {
-                    linkMessage += 'A valid link starts with http://\n';
-                    document.getElementById('news-link').setAttribute('style', 'border: 1px solid red');
+                if (link.length == 0) {
                     error++;
+                    linkMessage += 'Required field\n';
+
                 }
-                ;
+
+                if (!link.startsWith('http://')) {
+                    error++;
+                    linkMessage += 'A link has to start with http:// \n';
+                }
 
                 if (link.length < 10) {
-                    linkMessage += 'The news link must contain at least 10 characters';
-                    document.getElementById('news-link').setAttribute('style', 'border: 1px solid red');
                     error++;
-                    //return;
+                    linkMessage += 'The news link must contain at least 10 characters \n';
                 }
-                ;
 
-                document.getElementById('error-link').innerText = linkMessage;
+                checkElement(linkMessage, 'news-link', 'error-link');
 
 
+                //Author
+                var author = getValue('news-author');
                 var authorMessage = '';
-                if (author.length === 0) {
-                    authorMessage += '';
-                    //return;
-                }
-                ;
 
-                if (author.length > 0) {
-
-                    if (author.length < 3 || author.length > 20) {
-                        authorMessage = 'Author name must contain between 3 and 20 letters';
-                        document.getElementById('news-author').setAttribute('style', 'border: 1px solid red');
-                        error++;
-                        //return;
-                    }
-                }
-                ;
-                document.getElementById('error-author').innerText = authorMessage;
-
-
-
-                emailMessage = '';
-                if (authorEmail.length === 0) {
-                    emailMessage = 'Author email is required\n';
-                    document.getElementById('email').setAttribute('style', 'border: 1px solid red');
+                if ((author.length > 0 && author.length < 3) || author.length > 20) {
                     error++;
+                    authorMessage += 'Text must be between 3 and 20 charackters';
                 }
-                ;
 
-                if (authorEmail.length < 5) {
+                checkElement(authorMessage, 'news-author', 'error-author');
+
+
+                //Author email
+                var email = getValue('email');
+                var emailMessage = '';
+
+
+                if (email.length == 0) {
+                    error++;
+                    emailMessage += 'Required field\n';
+
+                }
+
+                if (email.length < 5) {
+                    error++;
                     emailMessage += 'The author email must contain at least 5 characters\n';
-                    document.getElementById('email').setAttribute('style', 'border: 1px solid red');
-                    error++;
-                }
-                ;
 
-                if (authorEmail.indexOf('@', 2) == -1) {
+                }
+
+                if (email.search('@') < 2) {
+                    error++;
                     emailMessage += 'Enter a valid email adress';
-                    document.getElementById('email').setAttribute('style', 'border: 1px solid red');
-                    error++;
                 }
-                ;
 
-                document.getElementById('error-email').innerText = emailMessage;
+
+                checkElement(emailMessage, 'email', 'error-email');
 
 
                 var oldHtml = document.getElementById('content').innerHTML;
-                var newHtml = '<h1>' + title + '</h1>' + '<p>' + text + '<p>' + '<a href="' + link + '">' + link + '</a>' + '<p>' + authorEmail + '<p>' + '<h4>' + author + '</h4>' + '<hr>' + oldHtml;
-
+                var newHtml = '<h1>' + title + '</h1>' +
+                        '<p>' + text + '<p>' +
+                        '<a href="' + link + '">' + link + '</a>' +
+                        '<p>' + email + '<p>' +
+                        '<h4>' + author + '</h4>' +
+                        '<hr>' + oldHtml;
 
                 if (error == 0) {
                     document.getElementById('content').innerHTML = newHtml;
-                    document.getElementById('news-title').value = '';
-                    document.getElementById('news-text').value = '';
-                    document.getElementById('news-link').value = '';
-                    document.getElementById('news-author').value = '';
-                    document.getElementById('email').value = '';
+                    
+                    clearData('news-title');
+                    clearData('news-text');
+                    clearData('news-author');
+                    clearData('email');
+                    clearData('news-link');
                 }
                 ;
 
 
+            }/*function provera end*/
 
 
-            }/*function end*/
+            function getValue(id) {
+                return document.getElementById(id).value.trim();
+            }
 
 
+            function checkElement(errorMessage, elementId, errorId) {
+                if (errorMessage.length > 0) {
+                    document.getElementById(elementId).setAttribute('style', 'border:1px solid red');
+                    document.getElementById(errorId).innerText = errorMessage;
+                } else {
+                    document.getElementById(elementId).setAttribute('style', 'border:1px solid #000');
+                    document.getElementById(errorId).innerText = '';
+                }
+            }
 
-
-
-
+            function clearData(id) {
+                document.getElementById(id).value = '';
+            }
 
 
 
